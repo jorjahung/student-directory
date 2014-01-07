@@ -33,8 +33,8 @@ end
 
 def print(students)
 # this is called iteration
-	students.each do |student|
-		puts "#{student[:name]} (#{student[:cohort]} cohort)"
+	students.each_with_index do |student,i|
+		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
 	end
 end
 
@@ -72,5 +72,5 @@ end
 
 students = input_students
 print_header(students)
-print(students).each_with_index
+print(students)
 print_footer(students)
