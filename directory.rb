@@ -64,7 +64,7 @@ def input_students
 		name.capitalize!
 	end
 	# return the array of students
-	students
+	students.sort {|x,y| x[:name] <=> y[:name] } 
 end
 # end of methods we created
 
