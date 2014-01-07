@@ -1,9 +1,21 @@
 # let's put all students into an array
 students = [
 "Jorja",
-"Student 1",
-"Student 2",
-"Student 3"
+"Berta",
+"Andrey",
+"Peter",
+"James",
+"Megan",
+"Rolando",
+"Biwek",
+"Colin",
+"Kalle",
+"Makis",
+"Ayaz",
+"Roy",
+"Mihai",
+"Nabin",
+"Abraham"
 ]
 # let's create methods
 def print_header
