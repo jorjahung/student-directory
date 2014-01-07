@@ -1,21 +1,21 @@
-# let's put all students into an array
+# let's put all students and their cohorts into an array
 students = [
-"Jorja",
-"Berta",
-"Andrey",
-"Peter",
-"James",
-"Megan",
-"Rolando",
-"Biwek",
-"Colin",
-"Kalle",
-"Makis",
-"Ayaz",
-"Roy",
-"Mihai",
-"Nabin",
-"Abraham"
+	{:name => "Jorja", :cohort => :january},
+{:name => "Berta", :cohort => :january},
+{:name => "Andrey", :cohort => :january},
+{:name => "Peter", :cohort => :january},
+{:name => "James", :cohort => :january},
+{:name => "Megan", :cohort => :january},
+{:name => "Rolando", :cohort => :january},
+{:name => "Biwek", :cohort => :january},
+{:name => "Colin", :cohort => :january},
+{:name => "Kalle", :cohort => :january},
+{:name => "Makis", :cohort => :january},
+{:name => "Ayaz", :cohort => :january},
+{:name => "Roy", :cohort => :january},
+{:name => "Mihai", :cohort => :january},
+{:name => "Nabin", :cohort => :january},
+{:name => "Abraham", :cohort => :january},
 ]
 # let's create methods
 def print_header
@@ -23,10 +23,10 @@ def print_header
 	puts "-------------------------------------------"
 end
 
-def print(names)
+def print(students)
 # this is called iteration
-	names.each do |name|
-		puts name
+	students.each do |student|
+		puts "#{student[:name]} (#{student[:cohort]} cohort)"
 	end
 end
 
