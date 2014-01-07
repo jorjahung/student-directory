@@ -23,26 +23,34 @@
 
 def print_header(names)
 	if names.length == 1
-		puts "The only student of my cohort at Makers Academy"
-		puts "-----------------------------------------------"
+		puts "The only student of my cohort at Makers Academy".center(100)
+		puts "-----------------------------------------------".center(100)
 	else 
-		puts "The students of my cohort at Makers Academy"
-		puts "-------------------------------------------"
+		puts "The students of my cohort at Makers Academy".center(100)
+		puts "-------------------------------------------".center(100)
 	end
 end
 
 def print(students)
 # this is called iteration
 	students.each_with_index do |student,i|
-		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(100)
 	end
+
+# Exercise #5 (?) answer:
+# 	student_count = students.count
+# while students.count > 0
+# 	puts "#{student_count-students.count+1}. #{students.first[:name]} (#{students.first[:cohort]} cohort)".center(100)
+# 	students.shift
+# end
+
 end
 
 def print_footer(names)
 	if names.length == 1
-		puts "Overall, we have #{names.length} great student."
+		puts "Overall, we have #{names.length} great student.".center(100)
 	else
-		puts "Overall, we have #{names.length} great student."
+		puts "Overall, we have #{names.length} great student.".center(100)
 	end
 end
 
@@ -58,7 +66,11 @@ def input_students
 	while !name.empty? do
 		#add the student hash to the array
 		students << {:name => name, :cohort => :january}
-		puts "Now we have #{students.length} students."
+		if students.length == 1
+			puts "Now we have #{students.length} student."
+		else
+			puts "Now we have #{students.length} students."
+		end
 		#get another name from the user
 		name = gets.chomp
 		name.capitalize!
