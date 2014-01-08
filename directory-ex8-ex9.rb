@@ -123,7 +123,7 @@ def print_cohorts(students)
 				puts "Error, please input date in numerical format:"
 				cohort = Integer(gets.chomp)
 		end
-
+# THIS!
 	puts "The students of the #{cohort_option} cohort are:"
 		students.select{|student| student[:cohort] == cohort_option}.each_with_index do |student,i|
 		puts "#{i+1}. #{student[:name]} -- (#{student[:cohort]} cohort)".center(100)
