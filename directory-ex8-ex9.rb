@@ -1,8 +1,14 @@
 # Exercise #8 and 9
 
-def print_header
-	puts "The only students of at Makers Academy".center(100)
-	puts "---------------------------------------".center(100)
+def print_header(names)
+	if names.length == 1
+		puts "The only student of Makers Academy".center(100)
+		puts "----------------------------------".center(100)
+	else
+		puts "The students of Makers Academy".center(100)
+		puts "------------------------------".center(100)
+	end
+	
 end
 
 
@@ -63,7 +69,7 @@ def input_students
 			end
 
 			students << {:name => name, :cohort => cohort}
-			
+
 		end
 
 
@@ -87,6 +93,6 @@ end
 
 
 students = input_students
-print_header
+print_header(students)
 print(students)
 print_footer(students)
