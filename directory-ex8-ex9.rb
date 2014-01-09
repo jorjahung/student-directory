@@ -14,6 +14,7 @@ end
 
 def print(students)
 # this is called iteration
+	# puts "#{students[:cohort]}"
 	students.each_with_index do |student,i|
 		puts "#{i+1}. #{student[:name]} -- (#{student[:cohort]} cohort)".center(100)
 	end
@@ -33,48 +34,32 @@ def input_students
 		name = gets.chomp
 		name.capitalize!
 
+		months = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
+		cohort = nil
 		if !name.empty? 
-
-			puts "Cohort (in numerical format):"
-			cohort = gets.to_i
-
-			case cohort
-			when 1
-				cohort = :January
-			when 2
-				cohort = :February
-			when 3
-				cohort = :March
-			when 4
-				cohort = :April
-			when 5
-				cohort = :May
-			when 6
-				cohort = :June
-			when 7
-				cohort = :July
-			when 8
-				cohort = :August
-			when 9
-				cohort = :September
-			when 10
-				cohort = :October
-			when 11
-				cohort = :November
-			when 12
-				cohort = :December
-			else
-				puts "Error, please input date in numerical format:"
-				cohort = Integer(gets.chomp)
+			loop do
+				puts "Cohort (in numerical format):"
+				cohort = gets.to_i
+				unless (1..12).include?(cohort)
+					puts "Please try again"
+					redo
+				end
+				cohort = months[cohort-1]
+				break
 			end
-
+			
+			# puts the input into the array
 			students << {:name => name, :cohort => cohort}
-
 		end
 	end
 
-	# return the array of students
-	students.sort {|x,y| x[:cohort] <=> y[:cohort]} 
+	
+	months = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
+	
+	# sorts the array of students
+	students.sort {|x,y| months.index(x[:cohort]) <=> months.index(y[:cohort])} 
+	#students.sort {||}
+
 end
 
 
@@ -92,42 +77,34 @@ end
 # end
 
 def print_cohorts(students)
-	puts "Which cohort would you like to see? Please select the month in numerical format."
-	cohort_option = gets.to_i
-		case cohort_option
-			when 1
-				cohort_option = :January
-			when 2
-				cohort_option = :February
-			when 3
-				cohort_option = :March
-			when 4
-				cohort_option = :April
-			when 5
-				cohort_option = :May
-			when 6
-				cohort_option = :June
-			when 7
-				cohort_option = :July
-			when 8
-				cohort_option = :August
-			when 9
-				cohort_option = :September
-			when 10
-				cohort_option = :October
-			when 11
-				cohort_option = :November
-			when 12
-				cohort_option = :December
-			else
-				puts "Error, please input date in numerical format:"
-				cohort = Integer(gets.chomp)
-		end
+	# puts "Which cohort would you like to see? Please select the month in numerical format."
+	# cohort_option = gets.to_i
+
+	months = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
+	cohort = nil
+			loop do
+				puts "Which cohort would you like to see? Please select the month in numerical format."
+				cohort = gets.to_i
+				unless (1..12).include?(cohort)
+					puts "Please try again"
+					redo
+				end
+				cohort = months[cohort-1]
+				break
+			end	
+			
 # THIS!
-	puts "The students of the #{cohort_option} cohort are:"
-		students.select{|student| student[:cohort] == cohort_option}.each_with_index do |student,i|
+	if students.count == 1
+		puts "The only student of the #{cohort} cohort is:".center(100)
+		students.select{|student| student[:cohort] == cohort}.each_with_index do |student,i|
 		puts "#{i+1}. #{student[:name]} -- (#{student[:cohort]} cohort)".center(100)
 		end
+	elsif students.count > 1	
+		puts "The students of the #{cohort} cohort are:".center(100)
+		students.select{|student| student[:cohort] == cohort}.each_with_index do |student,i|
+		puts "#{i+1}. #{student[:name]} -- (#{student[:cohort]} cohort)".center(100)
+		end
+	end
 end
 
 students = input_students
