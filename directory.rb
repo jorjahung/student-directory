@@ -15,8 +15,7 @@ def print_header(names)
 	
 end
 
-
-def print(students)
+def print_students_list(students)
 # this is called iteration
 	students.each_with_index do |student,i|
 		puts "#{i+1}. #{student[:name]} -- (#{student[:cohort]} cohort)".center(100)
@@ -116,12 +115,12 @@ def print_cohorts(students)
 	end
 end
 
-def printing_menu
+def print_students
 	puts "Do you want to 1.) Print all students? or 2.) Print by cohorts? Please choose '1' or '2'"
 	option = gets.to_i
 	if option == 1
 		print_header(@students)
-		print(@students)
+		print_students_list(@students)
 		print_footer(@students)
 		interactive_menu
 	elsif option == 2
@@ -135,29 +134,36 @@ end
 
 def interactive_menu
 	loop do
+	
+	print_menu
+	process(gets.to_i)
+
+	end
+end
+
+def print_menu
 	puts "What do you want to do next?"
 	puts "1.) Input more students" 
 	puts "2.) Print names again"
 	puts "9.) Exit"
-	selection = gets.to_i
-		case selection
+end
+
+def process(selection)
+	case selection
 		when 1
 			input_students
-			printing_menu
+			print_students
 		when 2
-			printing_menu
+			print_students
 		when 9
 			exit
 		else
-			puts "I don't know what you mean, please select from:"
-			puts "1.) Input more students" 
-			puts "2.) Print names again"
-			puts "9.) Exit"
+			puts "I don't know what you mean, please try again."
+			print_menu
 		end
-	end
-end
+end		
 
 
 @students = input_students
-printing_menu
+print_students
 
