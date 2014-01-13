@@ -33,7 +33,7 @@ def input_students
 	while name.nil? || !name.empty? do
 
 		puts "First name:"
-		name = gets.chomp
+		name = STDIN.gets.chomp
 		name.capitalize!
 
 		months = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
@@ -42,7 +42,7 @@ def input_students
 		
 			loop do
 				puts "Cohort (in numerical format):"
-				cohort = gets.to_i
+				cohort = STDIN.gets.to_i
 				unless (1..12).include?(cohort)
 					puts "Please try again"
 					redo
@@ -87,7 +87,7 @@ def print_cohorts(students)
 	cohort = nil
 			loop do
 				puts "Which cohort would you like to see? Please select the month in numerical format."
-				cohort = gets.to_i
+				cohort = STDIN.gets.to_i
 				unless (1..12).include?(cohort)
 					puts "Please try again"
 					redo
@@ -117,7 +117,7 @@ end
 
 def print_students
 	puts "Do you want to 1.) Print all students? or 2.) Print by cohorts? Please choose '1' or '2'"
-	option = gets.to_i
+	option = STDIN.gets.to_i
 	if option == 1
 		print_header(@students)
 		print_students_list(@students)
@@ -128,7 +128,7 @@ def print_students
 		interactive_menu
 	else
 		puts "Invalid choice. Please choose between 1 or 2."
-		option.gets.to_i
+		option.STDIN.gets.to_i
 	end
 end
 
@@ -136,7 +136,7 @@ def interactive_menu
 	loop do
 	
 	print_menu
-	process(gets.to_i)
+	process(STDIN.gets.to_i)
 
 	end
 end
@@ -144,7 +144,9 @@ end
 def print_menu
 	puts "What do you want to do next?"
 	puts "1.) Input more students" 
-	puts "2.) Print names again"
+	puts "2.) Print names"
+	puts "3.) Remove a name"
+	puts "4.) Save the list to students.csv"
 	puts "9.) Exit"
 end
 
@@ -152,9 +154,12 @@ def process(selection)
 	case selection
 		when 1
 			input_students
-			print_students
 		when 2
 			print_students
+		when 3
+			remove_name
+		when 4
+			save_students	
 		when 9
 			exit
 		else
@@ -163,7 +168,51 @@ def process(selection)
 		end
 end		
 
+def save_students
+	# open the file for writing
+	file = File.open("students.csv", "w")
+	# iterate over the array of students
+	@students.each do |student|
+		student_data = [student[:name], student[:cohort]]
+		csv_line = student_data.join(",")
+		file.puts csv_line
+	end
+# delete??
+	file.close
+end	
 
+def load_students(filename = "students.csv")
+	file = File.open(filename, "r")
+	file.readlines.each do |line|
+		name, cohort = line.chomp.split (',')
+		@students << {name: name, cohort: cohort.to_sym}
+	end
+	file.close
+end	
+
+def try_load_students
+	filename = ARGV.first
+	if filename.nil?
+		load_students
+	elsif File.exists?(filename)
+		load_students(filename)
+		puts "Loaded #{@students.length} from #{filename}"
+	else
+		puts "Sorry, #{filename} does not exist."
+		exit
+	end
+end
+
+def remove_name
+	puts "Which name do you want to delete?"
+	puts "Please select the number"
+	print_students_list(@students)
+	print "Delete: "
+	name = gets.to_i - 1
+	@students.delete_at(name)
+end
+
+try_load_students
 @students = input_students
-print_students
+interactive_menu
 
