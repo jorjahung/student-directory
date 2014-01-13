@@ -1,6 +1,7 @@
 # Exercise #8 and 9
 
 @students = []
+require 'date'
 
 def print_header(names)
 	if names.length <1
@@ -16,19 +17,18 @@ def print_header(names)
 end
 
 def print_students_list(students)
-# this is called iteration
-	students.each_with_index do |student,i|
-		puts "#{i+1}. #{student[:name]} -- (#{student[:cohort]} cohort)".center(100)
-	end
+	students.each_with_index {|student,i| puts "#{i+1}. #{student[:name]} -- (#{student[:cohort]} cohort)".center(100)}
 end
 
 def input_students
 	puts "Please enter the names of the students."
 	puts "To finish, just hit return twice."
-	# @students = []
 	
 	#get the first name, but first create a variable so that it exists
 	name = nil
+	months = Date::MONTHNAMES
+	months = months.map { |month| month.nil? ? "" : month.to_sym}
+	# [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
 
 	while name.nil? || !name.empty? do
 
@@ -36,7 +36,6 @@ def input_students
 		name = STDIN.gets.chomp
 		name.capitalize!
 
-		months = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
 		cohort = nil
 		if !name.empty? 
 		
@@ -47,20 +46,18 @@ def input_students
 					puts "Please try again"
 					redo
 				end
-				cohort = months[cohort-1]
+				cohort =  Date::MONTHNAMES[cohort].to_sym
 				break
 			end
 			
 			# puts the input into the array
 			@students << {:name => name, :cohort => cohort}
 		end
-	end
+	end	
 
 	
-	months = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
-	
 	# sorts the array of students by cohort
-	@students.sort {|x,y| months.index(x[:cohort]) <=> months.index(y[:cohort])} 
+	@students.sort {|x,y|  months.index(x[:cohort]) <=>  months.index(y[:cohort])} 
 	
 	# sorts the array by name
 	# students.sort {|x,y| x[:name] <=> y[:name] } 
@@ -83,7 +80,7 @@ end
 def print_cohorts(students)
 
 
-	months = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
+	 # Date::MONTHNAMES = [:January,:February,:March,:April,:May,:June,:July,:August,:September,:October,:November,:December]
 	cohort = nil
 			loop do
 				puts "Which cohort would you like to see? Please select the month in numerical format."
@@ -92,7 +89,7 @@ def print_cohorts(students)
 					puts "Please try again"
 					redo
 				end
-				cohort = months[cohort-1]
+				cohort =  Date::MONTHNAMES[cohort]
 				break
 			end	
 			
