@@ -1,4 +1,3 @@
-# # let's put all students and their cohorts into an array
 students = [
 	{:name => "Jorja", :cohort => :january},
 	{:name => "Berta", :cohort => :january},
@@ -17,9 +16,6 @@ students = [
 	{:name => "Nabin", :cohort => :january},
 	{:name => "Abraham", :cohort => :january},
 ]
-
-# let's create methods
-
 
 puts "Please enter a letter:"
 	letter = gets.chomp
@@ -47,11 +43,3 @@ students.each do |student|
 		puts "#{student[:name]} (#{student[:cohort]} cohort)"
 	end	
 end
-
-## This was your previous code, Jorja:
-# if students[:name].slice(0,1) == letter
-# 	puts "Student(s) whose name starts with #{letter}:"
-# 	puts students.each_with_index do |student,i|
-# 		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
-# 	end
-# end

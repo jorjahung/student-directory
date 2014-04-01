@@ -142,31 +142,52 @@ def interactive_menu
 end
 
 def print_menu
-        puts "What do you want to do next?"
-        puts "1.) Input more students" 
+        puts "What do you want to do?"
+        puts "1.) Input students" 
         puts "2.) Print names"
         puts "3.) Remove a name"
-        puts "4.) Save the list to students.csv"
+        puts "4.) Save the list"
+        puts "5.) Load another list"
         puts "9.) Exit"
 end
 
 def process(selection)
         case selection
                 when 1
-                        input_students
+                        @students = input_students
                 when 2
                         print_students
                 when 3
                         remove_name
                 when 4
-                        save_students        
+                        save_students
+                when 5
+                      save_or_not
                 when 9
                         exit
                 else
                         puts "I don't know what you mean, please try again."
                         print_menu
                 end
-end                
+end          
+
+def save_or_not
+        puts "Would you like to save the students you entered? (y/n)"
+        save = STDIN.gets.chomp.downcase
+        case save
+        when "y"
+                save_students
+                @students = []
+                puts "Which file do you want to load?"
+                filename = STDIN.gets.chomp.downcase
+                load_students(filename)
+        when "n"
+                @students = []
+                puts "Which file do you want to load?"
+                filename = STDIN.gets.chomp.downcase
+                load_students(filename)
+    end
+end
 
 def save_students
         # open the file for writing
@@ -183,10 +204,12 @@ end
 
 def load_students(filename = "students.csv")
         file = File.open(filename, "r")
+        
         file.readlines.each do |line|
                 name, cohort = line.chomp.split (',')
                 @students << {name: name, cohort: cohort.to_sym}
         end
+        puts "Loaded #{@students.length} from #{filename}"
         file.close
 end        
 
@@ -196,7 +219,6 @@ def try_load_students
                 load_students
         elsif File.exists?(filename)
                 load_students(filename)
-                puts "Loaded #{@students.length} from #{filename}"
         else
                 puts "Sorry, #{filename} does not exist."
                 exit
@@ -208,10 +230,18 @@ def remove_name
         puts "Please select the number"
         print_students_list(@students)
         print "Delete: "
-        name = gets.to_i - 1
+        name = STDIN.gets.to_i - 1
         @students.delete_at(name)
+
+        puts "Would you like to delete another name? (y/n)"
+        answer = STDIN.gets.chomp.downcase
+        case answer
+        when "y"
+                remove_name
+        when "n"
+                interactive_menu
+        end
 end
 
 try_load_students
-@students = input_students
 interactive_menu
