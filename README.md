@@ -11,4 +11,7 @@ To use the basic student directory (Week 1 exercise):
 ```shell
 ruby directory.rb
 ```
-
+Extra challenge for week 1, the program will print the January cohort student(s) whose name begins with a specified letter and a specified number of characters:
+```shell
+ruby directory-ex3-ex4.rb
+```
